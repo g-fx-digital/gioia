@@ -1,0 +1,10 @@
+{
+  "name": "Gioia",
+  "version": "0.1.0",
+  "description": "A WordPress Theme powered by Vue.js",
+  "main": "rest-theme/src/index.js",
+  "repository": "https://github.com/Suzamax/gioia",
+  "author": "Carlos <ratiosu.cct@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "private": true
+}
