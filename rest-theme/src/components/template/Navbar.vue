@@ -3,6 +3,7 @@
             type="light"
             variant="transparent"
         >
+        <b-container>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
@@ -19,7 +20,8 @@
                     <b-dropdown-item href="#">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>
-        </b-navbar>
+        </b-container>
+    </b-navbar>
 </template>
 
 <script>

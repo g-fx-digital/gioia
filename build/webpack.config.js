@@ -1,16 +1,25 @@
 const path = require('path')
+const { VueLoaderPlugin } = require('vue-loader')
+
+function resolve (dir) {
+    return path.join(__dirname, '..', dir)
+}
 
 module.exports = {
-    entry: {
-        
-    }, //"./rest-theme/src/index.js",
+    entry: [
+        "./rest-theme/src/index.js"
+    ], 
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: 'gioia.js'
+        filename: 'main.js'
     },
     mode: "development",
     module: {
         rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
             {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
@@ -19,7 +28,7 @@ module.exports = {
                     options: {
                         presets: [
                             [
-                                "env",
+                                "@babel/preset-env",
                                 {
                                     targets: {
                                         browsers: [
@@ -30,13 +39,30 @@ module.exports = {
                                             "last 4 Edge versions"
                                         ]
                                     },
-                                    useBuiltIns: true
+                                    useBuiltIns: "usage"
                                 }
                             ]
                         ]
                     }
                 }
+            },
+            {
+                test: /\.vue$/,
+                use: 'vue-loader'
             }
         ]
+    },
+    plugins: [
+        new VueLoaderPlugin()
+    ],
+    resolve: {
+        extensions: [
+            '.js',
+            '.vue',
+            '.json'
+        ],
+        alias: {
+            '@': resolve('rest-theme/src')
+        }
     }
 }

@@ -1,21 +1,21 @@
 <template>
-    <div id="wp">
+    <b-container>
         <navbar></navbar>
         <main>
             <router-view></router-view>
         </main>
-        <footer></footer>
-    </div>
+        <foot></foot>
+    </b-container>
 </template>
 
 <script>
 // Components
-import Navbar from './components/template/Navbar'
-import Footer from './components/template/Footer'
+import Navbar from '@/components/template/Navbar'
+import Footer from '@/components/template/Footer'
 export default {
     components: {
         navbar: Navbar,
-        footer: Footer
+        foot: Footer
     }
 }
 </script>
