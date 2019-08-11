@@ -1,5 +1,6 @@
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 function resolve (dir) {
     return path.join(__dirname, '..', dir)
@@ -7,13 +8,13 @@ function resolve (dir) {
 
 module.exports = {
     entry: [
-        "./src/index.js"
+        "./rest-theme/src/index.js"
     ], 
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: 'main.js'
     },
-    mode: "production",
+    mode: "development",
     module: {
         rules: [
             {
@@ -66,13 +67,27 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
-                use: 'url-loader?limit=100000'
-            }
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff"
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                  {
+                    loader: 'file-loader',
+                    options: {
+                      name: '[name].[ext]',
+                      outputPath: 'fonts/',
+                      publicPath: '/wp-content/themes/gioia/dist/fonts/'
+                    }
+                  }
+                ]
+            } 
         ]
     },
     plugins: [
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new VuetifyLoaderPlugin()
     ],
     resolve: {
         extensions: [
@@ -81,7 +96,9 @@ module.exports = {
             '.json'
         ],
         alias: {
-            '@': resolve('src')
+            '@': resolve('rest-theme/src'),
+            '~': resolve('node_modules')
         }
-    }
+    },
+    watch: true
 }

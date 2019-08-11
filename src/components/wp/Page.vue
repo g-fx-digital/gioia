@@ -11,14 +11,23 @@
 export default {
     data: function() {
         return {
-            page: [],
-            posts: []
+            page: {
+                title: {
+                    rendered: "..."
+                },
+                content: {
+                    rendered: "..."
+                }
+            }
         }
     },
     created() {
-        this.$http.get(this.$API() + 'gioia/v1' + '/front/')
+        this.$http.get(this.$API() + 'wp/v2' + '/pages' + '?slug=' + this.$route.params.pageSlug)
         .then(res => {
             this.page = res.data
+        })
+        .catch(e => {
+            console.log(e)
         })
     }
 }

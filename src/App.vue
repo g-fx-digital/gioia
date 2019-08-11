@@ -1,11 +1,13 @@
 <template>
-    <b-container>
+    <v-app id="inspire">
         <navbar></navbar>
-        <main>
-            <router-view></router-view>
-        </main>
+        <v-content>
+            <v-tabs-items v-model="tab">
+                <router-view></router-view>
+            </v-tabs-items>
+        </v-content>
         <foot></foot>
-    </b-container>
+    </v-app>
 </template>
 
 <script>
@@ -13,6 +15,11 @@
 import Navbar from '@/components/template/Navbar'
 import Footer from '@/components/template/Footer'
 export default {
+    data () {
+        return {
+            tab: []
+        }
+    },
     components: {
         navbar: Navbar,
         foot: Footer
