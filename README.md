@@ -25,3 +25,6 @@ Production:
 ```bash
 yarn build
 ```
+
+## Important
+Modify `baseURL` in `src/index.js` to match your current URL.

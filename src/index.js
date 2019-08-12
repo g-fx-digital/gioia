@@ -1,24 +1,26 @@
 // IMPORTS
 // Required
 import 'babel-polyfill'
+
 // Importing Vue, axios and Vuetify
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vuetify from '@/plugins/vuetify'
 import axios from 'axios'
-// WooCommerce
-//import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api"
-//import api_wc from "@/credentials/woocommerce"
+
 // Apollo GraphQL
 import ApolloClient from 'apollo-boost'
 import VueApollo from 'vue-apollo'
 // Import router
 import router from './routes'
 
+// Constant
+const baseURL = 'http://192.168.1.8'
+
 // Prototypes
 // Axios
 Vue.prototype.$http = axios.create({
-    baseURL: 'http://192.168.1.8/'
+    baseURL: baseURL
 })
 // WordPress API
 Vue.prototype.$API = function() {
@@ -45,7 +47,7 @@ import '@/assets/css/styles.css'
 // Use the Apollo Client
 const apolloClient = new ApolloClient({
     // You should use an absolute URL here
-    uri: 'http://192.168.1.8/graphql'
+    uri: baseURL + '/graphql'
 })
 const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
