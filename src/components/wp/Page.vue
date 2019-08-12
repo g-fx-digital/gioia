@@ -1,10 +1,10 @@
 <template>
-    <b-container fluid>
+    <v-container fluid>
         <article v-bind:key="page.mainTitle">
-            <h1>{{ page.title.rendered }}</h1>
-            <p v-html="page.content.rendered"></p>
+            <h1>{{ page != undefined ? page.title.rendered : error }}</h1>
+            <p v-html="page != undefined ? page.content.rendered : error"></p>
         </article>
-    </b-container>
+    </v-container>
 </template>
 
 <script>

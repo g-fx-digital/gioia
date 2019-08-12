@@ -1,53 +1,82 @@
 <template>
-    <article>
-        {{ getShop }}
-        {{ shop }}
-    </article>
+    <v-container
+      grid-list-md
+      pa-4
+    >
+        <v-layout
+            wrap
+        >
+            <v-flex
+                v-for="edge in products.edges" 
+                :key="edge.node.id"
+                xs12 md4 lg3
+            >
+                <v-card>
+                    <v-img
+                        height="200px"
+                        :src="edge.node.image.sourceUrl"
+                    >
+                        <v-card-title>{{ edge.node.name }}</v-card-title>
+                    </v-img>
+                    <v-card-text>
+                        {{ edge.node.price }}
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn icon>
+                            <v-icon>mdi-heart</v-icon>
+                        </v-btn>
+
+                        <v-btn icon>
+                            <v-icon>mdi-bookmark</v-icon>
+                        </v-btn>
+
+                        <v-btn icon>
+                            <v-icon>mdi-share</v-icon>
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 export default {
-    props: ['categorySlug'],
-    data() {
+    data () {
         return {
-            shop: {
-                
-            }
+            products: [],
+            slug: this.$route.params.categorySlug
         }
     },
-    computed: {
-        getCategory: function(slug) {
-            this.$WCAPI.get('products/categories')
-                .then(res => {
-                    for (category in res.data) 
-                        if (category.name === slug) return category.id
-                })
-        },
-        getShop: function() {
-            this.$WCAPI.get('products/categories/18', {
-                per_page: 20,
-                //category: getCategory(categorySlug)
-            })
-            .then(res => {
-                this.shop = res.data
-            })
-            .catch(e => {
-                console.log(e)
-            })
+    apollo: {
+        products: {
+            query: gql`query products ($where: RootQueryToProductConnectionWhereArgs) {
+                products(where: $where) {
+                    edges {
+                        node {
+                            id
+                            name
+                            price
+                            image {
+                                sourceUrl
+                            }
+                        }
+                    }
+                }
+            }`,
+            variables () {
+                return {
+                    where: {
+                        categoryName: this.$route.params.categorySlug
+                    }
+                }
+            },
         }
     },
-    /*created() {
-        this.$WCAPI.get('products/categories/18', {
-            per_page: 20,
-            //category: getCategory(categorySlug)
-        })
-        .then(res => {
-            this.shop = res.data
-            console.log(res.data)
-        })
-        .catch(e => {
-            console.log(e)
-        })
-    }, /* */
+    
 }
 </script>

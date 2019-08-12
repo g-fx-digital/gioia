@@ -1,3 +1,4 @@
+// IMPORTS
 // Required
 import 'babel-polyfill'
 // Importing Vue, axios and Vuetify
@@ -5,33 +6,31 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vuetify from '@/plugins/vuetify'
 import axios from 'axios'
-// Font Awesome
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUser, faGem } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // WooCommerce
-import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api"
-import api_wc from "@/credentials/woocommerce"
-
+//import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api"
+//import api_wc from "@/credentials/woocommerce"
+// Apollo GraphQL
+import ApolloClient from 'apollo-boost'
+import VueApollo from 'vue-apollo'
 // Import router
 import router from './routes'
 
-// Usage
+// Prototypes
+// Axios
 Vue.prototype.$http = axios.create({
-    // baseURL: document.domain
+    baseURL: 'http://192.168.1.8/'
 })
-Vue.prototype.$API = function(api) {
-    return '/wp-json/' // + this[api]
+// WordPress API
+Vue.prototype.$API = function() {
+    return '/wp-json/'
 }
-Vue.prototype.$WCAPI = new WooCommerceRestApi(api_wc)
+// WooCommerce API
+//Vue.prototype.$WCAPI = new WooCommerceRestApi(api_wc)
+
+//Usages
 Vue.use(require('vue-resource'))
 Vue.use(VueRouter)
-
-library.add([
-    faUser, faGem
-])
-
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(VueApollo)
 
 // Components and CSS
 import App from "@/App.vue"
@@ -43,10 +42,20 @@ import '@/assets/css/styles.css'
  */
 // import '@/assets/css/signal.min.css'
 
+// Use the Apollo Client
+const apolloClient = new ApolloClient({
+    // You should use an absolute URL here
+    uri: 'http://192.168.1.8/graphql'
+})
+const apolloProvider = new VueApollo({
+    defaultClient: apolloClient,
+})
+
 // App
 new Vue({
     el: "#app",
     router,
     vuetify,
+    apolloProvider,
     render: h => h(App),
 })

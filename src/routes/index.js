@@ -2,12 +2,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// Usage
+Vue.use(Router)
+
 // Import routes:
 import wc from './wc'
 import wp from './wp'
-
-// Usage
-Vue.use(Router)
 
 const routes = [].concat(wp, wc)
 

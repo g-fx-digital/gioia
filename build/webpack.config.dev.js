@@ -8,7 +8,7 @@ function resolve (dir) {
 
 module.exports = {
     entry: [
-        "./rest-theme/src/index.js"
+        "./src/index.js"
     ], 
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -96,7 +96,7 @@ module.exports = {
             '.json'
         ],
         alias: {
-            '@': resolve('rest-theme/src'),
+            '@': resolve('src'),
             '~': resolve('node_modules')
         }
     },

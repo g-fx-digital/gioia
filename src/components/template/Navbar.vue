@@ -4,7 +4,7 @@
             v-model="drawer"
             color="#FFFFFF"
             right
-            src="https://picsum.photos/1920/1080?random"
+            src="/wp-content/themes/gioia/assets/hearts.jpg"
             absolute
             light
             temporary
@@ -43,13 +43,12 @@
             </v-list>
       </v-navigation-drawer>
 
-        <v-app-bar
-            
+        <v-app-bar   
             color="#FFFFFF"
             light
             shrink-on-scroll
             prominent
-            src="https://picsum.photos/1920/1080?random"
+            src="/wp-content/themes/gioia/assets/hearts.jpg"
             fade-img-on-scroll
         >
             <template v-slot:img="{ props }">
@@ -65,11 +64,14 @@
 
             <v-spacer></v-spacer>
 
-            <v-img 
-                max-height="120"
-                max-width="120"
-                v-bind:src="logo"
-            ></v-img>
+            <a href="/">
+                <v-img 
+                    max-height="120"
+                    max-width="120"
+                    v-bind:src="logo"
+                    transition=false
+                ></v-img>
+            </a>
             <v-spacer></v-spacer>
             
 
@@ -84,11 +86,11 @@
                 >
                     <v-tabs-slider></v-tabs-slider>
                     <v-tab 
-                    v-for="item in main_menu" :key="item.id"
-                    :to="item.url">
-                        {{ item.title }}
+                    v-for="edge in menuItems.edges" :key="edge.node.id"
+                    :to="edge.node.url">
+                        {{ edge.node.label }}
 
-                        <v-icon>{{ item.attr_title }}</v-icon>
+                        <v-icon>{{ edge.node.title }}</v-icon>
                     </v-tab>
                 </v-tabs>
             </template>
@@ -105,13 +107,38 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 export default {
     data() {
         return {
             logo: '/wp-content/themes/gioia/assets/loading.gif',
-            main_menu: '<p>...</p>',
+            menuItems: '<p>...</p>',
             drawer: null,
             items: []
+        }
+    },
+    apollo: {
+        menuItems: {
+            query: gql`query navbar ($where: RootQueryToMenuItemConnectionWhereArgs) {
+                menuItems(where: $where) {
+                    edges {
+                        node {
+                            id
+                            label
+                            title
+                            url
+                        }
+                    }
+                }
+            }`,
+            variables () {
+                return {
+                    where: {
+                        location: "MAIN_MENU"
+                    }
+                }
+            },
         }
     },
     created() {
@@ -122,19 +149,6 @@ export default {
         .catch(e => {
             console.log(e)
         })
-        this.$http.get(this.$API() + 'gioia/v1' + '/mainMenu/')
-        .then(res => {
-            this.main_menu = res.data
-        })
-        .catch(e => {
-            console.log(e)
-        })
-    },
-    computed: {
-        is_desktop() {
-            const isDesktop = window.matchMedia("screen and (min-width: 1200px)")
-            return isDesktop.matches
-        }
     },
     props: {
         source: String,
