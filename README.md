@@ -2,7 +2,7 @@
 
 This theme is designed to be powerful. It's compatible with WordPress and WooCommerce.
 
-## Requirements
+## Requirements (from [WPGraphQL](https://docs.wpgraphql.com/extensions/wpgraphql-woocommerce))
 
 1. Install & activate WooCommerce in order to use WooCommerce functionality.
 2. Install & activate WPGraphQL.
@@ -11,7 +11,7 @@ This theme is designed to be powerful. It's compatible with WordPress and WooCom
 
 ## What does use this theme?
 
-This theme uses: Vue.js, Vuetify, Axios, GraphQl, Apollo, WebPack and Babel.
+This theme uses: Vue.js, Vuetify, Axios, GraphQL, Apollo, WebPack and Babel.
 
 ## How to build
 First, install everything with Yarn (`npm` is evil). Afterwards, build it either in dev or prod mode.
